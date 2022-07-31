@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog.apps.BlogConfig', ## << app recem criada
     'produtos.apps.ProdutosConfig',
+    'sobre.apps.SobreConfig',
 ]
 
 MIDDLEWARE = [
