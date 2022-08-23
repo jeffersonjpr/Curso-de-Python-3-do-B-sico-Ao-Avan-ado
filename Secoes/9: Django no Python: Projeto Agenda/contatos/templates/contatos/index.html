@@ -13,12 +13,15 @@
     </thead>
     <tbody>
       {% for contato in contatos %}
+      {% comment %} Exibindo apenas contatos habilitados (mostrar) {% endcomment %}
+        {% if contato.mostrar %}
         <tr>
           <td><a href="{% url 'contact' contato.id %}">{{ contato.nome }}</a></td>
           <td>{{ contato.sobrenome }}</td>
           <td>{{ contato.telefone }}</td>
           <td>{{ contato.categoria }}</td>
         </tr>
+        {% endif %}
       {% endfor %}
     </tbody>
   </table>
