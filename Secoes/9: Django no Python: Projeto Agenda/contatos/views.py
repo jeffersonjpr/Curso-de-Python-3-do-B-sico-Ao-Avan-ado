@@ -22,3 +22,17 @@ def contact(request, contato_id):
     return render(request, 'contatos/contact.html', {
         'contato': contato
     })
+
+def busca(request):
+    termo = request.GET.get('termo')
+    print("Termo:", termo)
+
+    contatos = Contato.objects.order_by('-id').filter(
+        nome=termo,
+        mostrar=True
+    )
+    paginator = Paginator(contatos, 5) # 5 contatos por página
+
+    page = request.GET.get('page')
+    contatos = paginator.get_page(page)
+    return render(request, 'contatos/busca.html', {'contatos': contatos})
