@@ -34,13 +34,16 @@ def busca(request):
     termo = request.GET.get('termo')
     print("Termo:", termo)
 
+    if termo is None or not termo:
+        raise Http404()
+
     ## Seleção
     # Concatena nome e sobrenome
     campos = Concat('nome', Value(' '), 'sobrenome')
     contatos = Contato.objects.annotate(
         nome_completo=campos
     ).filter(
-        nome_completo__icontains=termo,
+        Q(nome_completo__icontains=termo) | Q(telefone__icontains=termo),
         mostrar=True
     )
     print(contatos.query)  # Imprime a consulta SQL feita para a busca acima
