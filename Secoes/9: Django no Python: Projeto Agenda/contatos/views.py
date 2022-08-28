@@ -9,9 +9,9 @@ from django.db.models.functions import Concat
 def index(request):
     contatos = Contato.objects.order_by('id').filter(
         mostrar=True)  # Filtra os contatos que estão ativos
-    paginator = Paginator(contatos, 5)  # 5 contatos por página
+    paginator = Paginator(contatos, 4)  # 5 contatos por página
 
-    page = request.GET.get('page')
+    page = request.GET.get('p')
     contatos = paginator.get_page(page)
     return render(request, 'contatos/index.html', {'contatos': contatos})
 
@@ -34,7 +34,7 @@ def busca(request):
     termo = request.GET.get('termo')
     print("Termo:", termo)
 
-    if termo is None or not termo:
+    if termo is None:
         raise Http404()
 
     ## Seleção
@@ -49,8 +49,8 @@ def busca(request):
     print(contatos.query)  # Imprime a consulta SQL feita para a busca acima
     # End seleção
 
-    paginator = Paginator(contatos, 5)  # 5 contatos por página
+    paginator = Paginator(contatos, 4)  # 5 contatos por página
 
-    page = request.GET.get('page')
+    page = request.GET.get('p')
     contatos = paginator.get_page(page)
     return render(request, 'contatos/busca.html', {'contatos': contatos})
