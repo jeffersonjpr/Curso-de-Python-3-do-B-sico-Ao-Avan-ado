@@ -4,7 +4,7 @@ from django.core.paginator import Paginator
 from django.http import Http404
 
 def index(request):
-    contatos = Contato.objects.order_by('id').filter(mostrar=True) # Filtra os contatos que estão ativos
+    contatos = Contato.objects.order_by('-id').filter(mostrar=True) # Filtra os contatos que estão ativos
     paginator = Paginator(contatos, 5) # 5 contatos por página
 
     page = request.GET.get('page')
