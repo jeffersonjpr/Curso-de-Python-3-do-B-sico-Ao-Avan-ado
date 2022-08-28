@@ -2,9 +2,10 @@ from django.shortcuts import render, get_object_or_404
 from .models import Contato
 from django.core.paginator import Paginator
 from django.http import Http404
+from django.db.models import Q
 
 def index(request):
-    contatos = Contato.objects.order_by('-id').filter(mostrar=True) # Filtra os contatos que estão ativos
+    contatos = Contato.objects.order_by('id').filter(mostrar=True) # Filtra os contatos que estão ativos
     paginator = Paginator(contatos, 5) # 5 contatos por página
 
     page = request.GET.get('page')
@@ -27,10 +28,12 @@ def busca(request):
     termo = request.GET.get('termo')
     print("Termo:", termo)
 
-    contatos = Contato.objects.order_by('-id').filter(
-        nome=termo,
+    contatos = Contato.objects.order_by('id').filter(
+        Q(nome__icontains=termo) | Q(sobrenome__icontains=termo), # Pipe (|) para buscar no nome e no sobrenome
         mostrar=True
     )
+    print(contatos.query) # Imprime a consulta SQL feita para a busca acima
+
     paginator = Paginator(contatos, 5) # 5 contatos por página
 
     page = request.GET.get('page')
