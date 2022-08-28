@@ -15,7 +15,6 @@
     <tbody>
       {% for contato in contatos %}
       {% comment %} Exibindo apenas contatos habilitados (mostrar) {% endcomment %}
-        {% if contato.mostrar %}
         <tr>
           <td>{{ contato.id }}</td>
           <td>
@@ -25,7 +24,6 @@
           <td>{{ contato.telefone }}</td>
           <td>{{ contato.categoria }}</td>
         </tr>
-        {% endif %}
       {% endfor %}
     </tbody>
   </table>
